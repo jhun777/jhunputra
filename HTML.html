@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jhun — Artist • Maker • Designer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0e0f12;
+        --muted: #8a90a2;
+        --brand: #ff5252;
+        --brand-2: #6c5ce7;
+        --radius: 18px;
+        --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.35);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Inter, sans-serif;
+        background: var(--bg);
+        color: #eef0f7;
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img,
+      video {
+        max-width: 100%;
+        display: block;
+        cursor: pointer;
+        border-radius: 12px;
+      }
+
+      /* Background 3D */
+      .bg-3d {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+      }
+      .gradient-vignette {
+        position: fixed;
+        inset: -20vh;
+        z-index: -3;
+        pointer-events: none;
+        background: radial-gradient(
+            60vmin 60vmin at 120% -10%,
+            rgba(255, 82, 82, 0.12),
+            transparent 60%
+          ),
+          radial-gradient(
+            60vmin 60vmin at -20% 10%,
+            rgba(108, 92, 231, 0.18),
+            transparent 60%
+          ),
+          radial-gradient(
+            120vmin 120vmin at 50% 110%,
+            rgba(255, 82, 200, 0.08),
+            transparent 65%
+          );
+      }
+      #particles-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+      }
+
+      /* Navbar */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(12px);
+        background: rgba(14, 15, 18, 0.7);
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .logo {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: conic-gradient(
+          from 0deg,
+          var(--brand),
+          var(--brand-2),
+          var(--brand)
+        );
+        box-shadow: 0 6px 16px rgba(255, 82, 82, 0.35);
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+      .spacer {
+        flex: 1;
+      }
+      .pill {
+        padding: 8px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        transition: 0.3s;
+      }
+      .pill:hover {
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+      }
+      .cta {
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        transition: 0.3s;
+      }
+      .cta:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(108, 92, 231, 0.6);
+      }
+
+      /* Hero */
+      header.hero {
+        max-width: 1120px;
+        margin: auto;
+        padding: 80px 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+      h1 {
+        font-size: clamp(32px, 5vw, 56px);
+        line-height: 1.1;
+        margin-bottom: 12px;
+        animation: fadeUp 1.2s ease both;
+      }
+      @keyframes fadeUp {
+        0% {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        100% {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .lead {
+        color: #ddd;
+        line-height: 1.7;
+      }
+      .hero-card {
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        transition: transform 0.6s ease;
+      }
+      .hero-card:hover {
+        transform: translateY(-8px) scale(1.02);
+      }
+      .hero-card img {
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+      .hero-card:hover img {
+        transform: scale(1.05) rotate3d(1, 1, 0, 8deg);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Sections */
+      section {
+        padding: 72px 20px;
+        max-width: 1120px;
+        margin: auto;
+        position: relative;
+        z-index: 1;
+      }
+      .section-title {
+        font-size: clamp(24px, 3vw, 36px);
+        margin-bottom: 10px;
+      }
+      .section-kicker {
+        color: var(--muted);
+        margin-bottom: 24px;
+      }
+
+      /* Cards */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+      }
+      .card {
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        background: rgba(21, 22, 27, 0.6);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+        transition: 0.4s;
+      }
+      .card img,
+      .card video {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+      .card:hover {
+        box-shadow: 0 0 25px rgba(108, 92, 231, 0.5);
+      }
+      .card:hover img,
+      .card:hover video {
+        transform: scale(1.05) rotate3d(1, 1, 0, 6deg);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      }
+      .card .meta {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 12px;
+        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.7));
+      }
+
+      /* Popup */
+      .popup {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.85);
+      }
+      .popup img,
+      .popup video {
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 12px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        animation: zoomIn 0.4s ease;
+      }
+      .popup .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 40px;
+        color: #fff;
+        cursor: pointer;
+      }
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.7) rotateY(-10deg);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="bg3d" class="bg-3d"></canvas>
+    <canvas id="particles-bg"></canvas>
+    <div class="gradient-vignette"></div>
+
+    <!-- Navbar -->
+    <nav>
+      <div class="logo"></div>
+      <span>JHUN · HERYANDA · PUTRA</span>
+      <span class="spacer"></span>
+      <a class="pill" href="#gallery-main">Gallery</a>
+      <a class="pill" href="#gallery-new">New in Gallery</a>
+      <a class="pill" href="#story">Story</a>
+      <a class="pill" href="#favorit">Favorit</a>
+      <a class="pill" href="#contact">Contact</a>
+      <button class="cta">Subscribe</button>
+    </nav>
+
+    <body>
+      <!-- INTRO SCREEN -->
+<div id="intro-screen">
+  <div class="intro-content">
+    <h1> Selamat Datang </h1>
+    <p>Click login to enter my world</p>
+
+    <button id="enter-btn">Login</button>
+  </div>
+
+  <!-- Foto di pojok kiri -->
+  <div class="intro-gallery-left">
+    <div class="scrolling-photos">
+      <img src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\C45008212F7BDF6EAB6050C2A564435A\WhatsApp Image 2025-08-16 at 08.14.01_04e3303e.jpg" alt="Foto 1" />
+      <img src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\F0FCF351DF4EB6786E9BB6FC4E2DEE02\WhatsApp Image 2025-08-16 at 08.14.02_85312142.jpg" alt="Foto 2" />
+      <img src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\D523773C6B194F37B938D340D5D02232\WhatsApp Image 2025-08-16 at 08.14.04_776f1c62.jpg" alt="Foto 3" />
+      <img src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\C366C2C97D47B02B24C3ECADE4C40A01\WhatsApp Image 2025-08-16 at 08.14.04_2f140b40.jpg" alt="Foto 4" />
+      <img src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\7385DB9A3F11415BC0E9E2625FAE3734\WhatsApp Image 2025-08-16 at 01.04.46_a30416df.jpg" alt="Foto 5" />
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+  // Klik tombol masuk
+  document.getElementById("enter-btn").addEventListener("click", () => {
+    document.getElementById("intro-screen").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
+  });
+</script>
+
+<style>
+  /* INTRO FULLSCREEN */
+  #intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #0d001a, #1a001f);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+  }
+
+  /* Konten intro */
+  .intro-content {
+    text-align: center;
+    z-index: 2;
+  }
+
+  .intro-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #c77dff;
+    text-shadow: 0 0 20px #9d4eddb7;
+  }
+
+  .intro-content p {
+    margin-bottom: 20px;
+    color: #e0aaffc5;
+  }
+
+  #enter-btn {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #5a189a, #9d4edd);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  #enter-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #c77dff, 0 0 30px #7b2cbf;
+  }
+
+  /* FOTO POJOK KIRI */
+  .intro-gallery-left {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200px;
+    height: 70%;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #9d4edd, 0 0 40px #5a189a;
+  }
+
+  .scrolling-photos {
+    display: flex;
+    flex-direction: column;
+    animation: scroll-photos 15s linear infinite;
+  }
+
+  .scrolling-photos img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+
+  /* Animasi auto scroll */
+  @keyframes scroll-photos {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+
+  /* MAIN CONTENT (hidden dulu) */
+  #main-content {
+    display: none;
+  }
+</style>
+
+
+    <!-- Hero -->
+    <header class="hero">
+      <div>
+        <h1>Selamat Datang<br />di Website Saya</h1>
+        <p class="lead">
+          This is my personal space on the internet. Explore, find inspiration,
+          and get to know me better.
+        </p>
+        <div style="margin-top: 20px">
+          <a class="cta" href="#gallery-main">Lihat Gallery</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <img
+          src="c:\Users\MyBook Hype AMD\OneDrive\Pictures\WhatsApp Image 2025-08-16 at 01.04.46_367aa7d9.jpg"
+          alt="Hero"
+        />
+      </div>
+    </header>
+
+    <style>
+      .hero-card {
+        perspective: 1000px;
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        border-radius: 18px;
+      }
+
+      /* Glow mengikuti mouse */
+      .hero-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at var(--x, 50%) var(--y, 50%),
+          rgba(229, 82, 255, 0.267),
+          transparent 60%
+        );
+        transition: background 0.2s;
+        pointer-events: none;
+        border-radius: 18px;
+      }
+
+      .hero-card img {
+        transform-style: preserve-3d;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 18px;
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    </style>
+
+    <script>
+      // Efek 3D Tilt + Glow Dinamis + Idle Animation
+      (function () {
+        const card = document.querySelector(".hero-card");
+        const img = card.querySelector("img");
+
+        card.addEventListener("mousemove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = ((y - centerY) / centerY) * 12;
+          const rotateY = ((x - centerX) / centerX) * 12;
+
+          img.style.transform = `
+        rotateX(${-rotateX}deg)
+        rotateY(${rotateY}deg)
+        scale(1.08)
+      `;
+          img.style.boxShadow = `${-rotateY * 2}px ${
+            rotateX * 2
+          }px 40px rgba(108,92,231,0.5),
+                             ${rotateY * 2}px ${
+            -rotateX * 2
+          }px 30px rgba(255,82,200,0.3)`;
+
+          // update posisi glow
+          card.style.setProperty("--x", `${x}px`);
+          card.style.setProperty("--y", `${y}px`);
+        });
+
+        card.addEventListener("mouseleave", () => {
+          img.style.transform = "rotateX(0) rotateY(0) scale(1)";
+          img.style.boxShadow = "none";
+          card.style.setProperty("--x", "50%");
+          card.style.setProperty("--y", "50%");
+        });
+
+        // Idle animation biar gak kaku
+        let idle = 0;
+        setInterval(() => {
+          idle += 0.02;
+          img.style.transform = `rotateX(${Math.sin(idle) * 2}deg) rotateY(${
+            Math.cos(idle) * 2
+          }deg) scale(1.02)`;
+        }, 50);
+      })();
+    </script>
+
+    <!-- GALLERY -->
+    <section id="gallery-main">
+      <h2 class="section-title">Gallery</h2>
+      <p class="section-kicker">
+        Click a video to play or a picture to view larger.
+      </p>
+
+      <div class="grid">
+        <!-- Card 1 -->
+        <article class="card reveal tilt">
+          <video controls>
+            <source
+              src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\FF1418E8CC993FE8ABCFE3CE2003E5C5\WhatsApp Video 2025-08-16 at 02.02.19_bc1a6045.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div class="meta"><h4>I Myself</h4></div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card reveal tilt">
+          <img
+            src="c:\Users\MyBook Hype AMD\OneDrive\Pictures\Screenshot\Screenshot 2025-08-16 023156.png"
+            alt="Clouds"
+            class="popup-img"
+          />
+          <div class="meta"><h4>social media accounts</h4></div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card reveal tilt">
+          <video controls>
+            <source
+              src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\D7FD118E6F226A71B5F1FFE10EFD0A78\WhatsApp Video 2025-08-16 at 02.24.39_ade4c263.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div class="meta"><h4>my favorite song</h4></div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="card reveal tilt">
+          <img
+            src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\96C5C28BECF18E71190460A9955AA4D8\WhatsApp Image 2025-08-16 at 02.38.36_443ccf5b.jpg"
+            alt="Clouds"
+            class="popup-img"
+          />
+          <div class="meta"><h4>my hobby is running</h4></div>
+        </article>
+      </div>
+    </section>
+
+    <style>
+      /* Grid layout */
+      #gallery-main .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 25px;
+      }
+
+      .card video,
+      .card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+        border-radius: 18px 18px 0 0;
+      }
+
+      .card .meta {
+        padding: 12px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+      }
+
+      /* Hover efek */
+      .card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 12px 35px rgba(255, 82, 200, 0.3),
+          0 8px 20px rgba(108, 92, 231, 0.4);
+      }
+
+      /* Reveal animation */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .popup.active {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .popup img,
+      .popup video {
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 12px;
+        box-shadow: 0 0 30px rgba(255, 82, 200, 0.4);
+      }
+
+      .popup span {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 40px;
+        color: #fff;
+        cursor: pointer;
+      }
+    </style>
+
+    <script>
+      // Reveal on scroll
+      const reveals = document.querySelectorAll(".reveal");
+      window.addEventListener("scroll", () => {
+        reveals.forEach((el) => {
+          const windowHeight = window.innerHeight;
+          const elementTop = el.getBoundingClientRect().top;
+          if (elementTop < windowHeight - 100) {
+            el.classList.add("active");
+          }
+        });
+      });
+
+      closeBtn.addEventListener("click", () =>
+        popup.classList.remove("active")
+      );
+    </script>
+
+    <!-- STORY -->
+    <section id="story">
+      <div class="wrap about">
+        <div class="portrait reveal">
+          <img
+            src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\F9D1152547C0BDE01830B7E8BD60024C\WhatsApp Image 2025-08-16 at 03.03.59_420b8bfb.jpg"
+            alt="Portrait"
+            class="popup-img"
+          />
+        </div>
+        <div class="story-text reveal">
+          <h2 class="section-title">How it all began</h2>
+          <p>
+            "Back when I was little, the world seemed so vast yet so simple. I
+            ran without fear of falling, laughed for no reason, and cried
+            occasionally. Now I realize that those times were a treasure—not
+            because I didn't have problems, but because I never felt like I had
+            to be strong alone."
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAVORIT -->
+    <section id="favorit">
+      <h2 class="section-title">My Favorit</h2>
+      <div class="grid">
+        <article class="card reveal">
+          <img
+            src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\C164BBC9D6C72A52C599BBB43D8DB8E1\WhatsApp Image 2025-08-16 at 03.29.56_0722d199.jpg"
+            alt="Donat"
+            class="popup-img"
+          />
+          <div class="meta"><h4>DONAT</h4></div>
+        </article>
+        <article class="card reveal">
+          <img
+            src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\19DE10ADBAA1B2EE13F77F679FA1483A\WhatsApp Image 2025-08-16 at 03.29.56_d601a584.jpg"
+            alt="Youuu"
+            class="popup-img"
+          />
+          <div class="meta"><h4>YOUUU</h4></div>
+        </article>
+        <article class="card reveal">
+          <img
+            src="c:\Users\MyBook Hype AMD\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\TempState\958ADB57686C2FDEC5796398DE5F317A\WhatsApp Image 2025-08-16 at 07.18.52_36fcbda8.jpg"
+            alt="Youuu"
+            class="popup-img"
+          />
+          <div class="meta"><h4>Sate</h4></div>
+        </article>
+      </div>
+    </section>
+
+     <!-- OUTRO / FOOTER -->
+      <footer id="outro">
+        <div class="outro-content" style="position: relative; z-index: 2">
+          <h2>✨ Terima Kasih Sudah Berkunjung ✨</h2>
+          <p> Sampai jumpa lagi!</p>
+          <div class="social-icons" style="margin: 18px 0">
+            <a href="#" target="_blank">📷</a>
+            <a href="#" target="_blank">💬</a>
+            <a href="#" target="_blank">▶️</a>
+          </div>
+          <p class="credit">© <span id="year"></span> Jhun Heryanda Putra</p>
+        </div>
+      </footer>
+  <!-- Tombol sosial media di akhir halaman -->
+  <div class="social-buttons" style="margin-top: 12px; display: flex; gap: 12px; justify-content: center;">
+    <a href="https://www.instagram.com/jhunheryanda_?igsh=aXhlZGJrZG41aGwy" target="_blank" class="cta">📷 Instagram</a>
+    <a href="https://wa.me/6283844818860" target="_blank" class="cta">💬 WhatsApp</a>
+    <a href="https://www.tiktok.com/@jhun_traa?_t=ZS-8yuf6YWCIl8&_r=1" target="_blank" class="cta">▶️ TikTok</a>
+  </div>
+</footer>
+
+      <!-- POPUP single -->
+      <div id="popup" class="popup" aria-hidden="true">
+        <span class="close" aria-label="close">&times;</span>
+        <img id="popup-img" src="" style="display: none" />
+        <video id="popup-video" controls style="display: none"></video>
+      </div>
+    </div>
+    <!-- end main-content -->
+
+    <!-- FOOTER -->
+    <footer>© <span id="year"></span> Jhun Heryanda Putra</footer>
+
+    <!-- Popup -->
+    <div id="popup" class="popup">
+      <span class="close" onclick="closePopup()">&times;</span>
+      <img id="popup-img" src="" />
+      <video id="popup-video" controls></video>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/three@0.157.0/build/three.min.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Popup system
+      const popup = document.getElementById("popup");
+      const popupImg = document.getElementById("popup-img");
+      const popupVideo = document.getElementById("popup-video");
+      document.querySelectorAll(".popup-img").forEach((el) => {
+        el.addEventListener("click", () => {
+          popup.style.display = "flex";
+          popupImg.src = el.src;
+          popupImg.style.display = "block";
+          popupVideo.style.display = "none";
+        });
+      });
+      document.querySelectorAll("video").forEach((el) => {
+        el.addEventListener("click", () => {
+          popup.style.display = "flex";
+          popupVideo.src = el.querySelector("source").src;
+          popupVideo.style.display = "block";
+          popupImg.style.display = "none";
+          popupVideo.play();
+        });
+      });
+      function closePopup() {
+        popup.style.display = "none";
+        popupImg.src = "";
+        popupVideo.pause();
+        popupVideo.src = "";
+      }
+
+      // Reveal on scroll
+      window.addEventListener("scroll", () => {
+        document.querySelectorAll(".reveal").forEach((el) => {
+          if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+            el.classList.add("active");
+          }
+        });
+      });
+
+      // Three.js background
+      (function () {
+        const canvas = document.getElementById("bg3d");
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: true,
+          alpha: true,
+        });
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(
+          60,
+          innerWidth / innerHeight,
+          0.1,
+          100
+        );
+        camera.position.z = 7;
+        const geo = new THREE.TorusKnotGeometry(2, 0.6, 120, 16);
+        const mat = new THREE.MeshStandardMaterial({
+          color: 0xff66cc,
+          metalness: 0.5,
+          roughness: 0.3,
+          emissive: 0x220022,
+          emissiveIntensity: 0.4,
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        scene.add(mesh);
+        const l1 = new THREE.PointLight(0xff00ff, 1.5, 20);
+        l1.position.set(5, 5, 5);
+        const l2 = new THREE.PointLight(0x00ffff, 1.2, 20);
+        l2.position.set(-5, -3, -5);
+        scene.add(l1, l2, new THREE.AmbientLight(0xffffff, 0.3));
+        function resize() {
+          renderer.setSize(innerWidth, innerHeight);
+          camera.aspect = innerWidth / innerHeight;
+          camera.updateProjectionMatrix();
+        }
+        resize();
+        window.addEventListener("resize", resize);
+        function animate() {
+          requestAnimationFrame(animate);
+          mesh.rotation.x += 0.005;
+          mesh.rotation.y += 0.006;
+          renderer.render(scene, camera);
+        }
+        animate();
+      })();
+
+      // Particles background
+      (function () {
+        const canvas = document.getElementById("particles-bg");
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+        const num = 60;
+        function resize() {
+          canvas.width = innerWidth;
+          canvas.height = innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+        for (let i = 0; i < num; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 2 + 1,
+            dx: (Math.random() - 0.5) * 0.5,
+            dy: (Math.random() - 0.5) * 0.5,
+          });
+        }
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = "rgba(255,255,255,0.6)";
+          particles.forEach((p) => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+            p.x += p.dx;
+            p.y += p.dy;
+            if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+          });
+          requestAnimationFrame(draw);
+        }
+        draw();
+      })();
+    </script>
+  </body>
+</html>
